@@ -1,0 +1,14 @@
+# Birth Rate (Should be under 1)
+0.0
+# Death Rate (Should be under 1)
+0.0
+# Death Rate as a result of Infection (Should be under 1)
+0.0
+# Duration (in days)
+365
+# Initial Population
+1000
+# Per Capita Infection Rate (Should be under 1)
+0.3
+# Mean recovery duration (days)
+20

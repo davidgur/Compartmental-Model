@@ -1,0 +1,17 @@
+(General),Grade 9,Grade 10,Grade 11,Grade 12
+Grade 9,3,3,3,3
+Grade 10,3,3,3,3
+Grade 11,3,3,3,3
+Grade 12,3,3,3,3
+,,,,
+(Class),Grade 9,Grade 10,Grade 11,Grade 12
+Grade 9,1.5,0.5,0.25,0.25
+Grade 10,0.5,1.5,0.25,0.25
+Grade 11,0.25,0.25,1.5,0.5
+Grade 12,0.25,0.25,0.5,1.5
+,,,,
+(Home),Grade 9,Grade 10,Grade 11,Grade 12
+Grade 9,0,0,0,0
+Grade 10,0,0,0,0
+Grade 11,0,0,0,0
+Grade 12,0,0,0,0

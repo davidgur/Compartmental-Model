@@ -1,23 +1,23 @@
 % seir_coupled.m
 % David Gurevich
 % February 25, 2019
-% Last Updated: March 8, 2019
+% Last Updated: March 18, 2019
 
 % Implementation of the SEIR model,
 % with mutliple beta values
 
 % TODO: - Add weekend
 
-daysToModel  = 31;                      % How many school days to model?
-minPerDay    = (24 * 60);                % How many minutes are there per day?
-totalMinutes = daysToModel * minPerDay;  % How many minutes to model?
-vaccPop      = 0.51;                     % What portion of the population is vaccinated?
+daysToModel  = 060;                       % How many school days to model?
+minPerDay    = (24 * 60);                 % How many minutes are there per day?
+totalMinutes = daysToModel * minPerDay;   % How many minutes to model?
+vaccPop      = 0.9;                       % What portion of the population is vaccinated?
 
-g = (1 / 8) / minPerDay;
-s = (1 / 4) / minPerDay;
-b = (0.88)  / minPerDay;
+g = (1 / 5)  / minPerDay;
+s = (1 / 12) / minPerDay;
+b = (0.88)   / minPerDay;
 
-r = 0.967;   % How effective is the vaccine?
+r = 0.995;   % How effective is the vaccine?
 
 
 bMatHall    = csvread('beta_vals.csv', 1, 1, 'B2..E5');
@@ -131,12 +131,12 @@ ylabel '% of Population';
 %   2: Hall
 %   3: Class
 subplot(3, 2, 5)
-h = plot(tTotal, tID, 'LineWidth', 2);
+plot(tTotal, tID, 'LineWidth', 2);
 axis([0 daysToModel 0.8 3.2])
 title('tSpan');
 
 subplot(3, 2, 6)
-h = plot(tTotal, tID, 'LineWidth', 2);
+plot(tTotal, tID, 'LineWidth', 2);
 axis([0 daysToModel 0.8 3.2])
 title('tSpan');
 

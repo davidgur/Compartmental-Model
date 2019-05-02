@@ -7,7 +7,7 @@
 
 
 % ---------- Simulation Params ---------- %
-daysToModel  = 0.1;
+daysToModel  = 60;
 minPerDay    = 24 * 60;
 totalMinutes = daysToModel * minPerDay;
 vaccCoverage = 0.0;
@@ -37,8 +37,47 @@ y0 = gen_y0(grade9Population,  ...
             vaccCoverage);
         
 paramPack = [infectionProbability, ...
-             minutesExposed, ...
-             minutesAtSchoolInfected, ...
-             minutesAtHomeInfected];
+             1 / minutesExposed, ...
+             1 / minutesAtSchoolInfected, ...
+             1 / minutesAtHomeInfected, ...
+             grade9Population, ...
+             grade10Population, ...
+             grade11Population, ...
+             grade12Population];
         
-[t, y] = ode23(@(t, y) model(t, y, paramPack, contactMatrixFriends, contactMatrixClass), tSpan, y0);
+[t, y] = ode45(@(t, y) model(t, y, paramPack, contactMatrixFriends, contactMatrixClass), tSpan, y0);
+
+% ---------- Plotting ---------- %
+tPlotting = linspace(0, daysToModel, totalMinutes);
+
+subplot(2, 2, 1)
+Gr9 = round([y(:, 1), y(:, 5), y(:, 9), y(:, 13) + y(:, 17), y(:, 21)]);
+h = plot(tPlotting, Gr9, 'LineWidth', 2);
+legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
+title('Grade 9');
+xlabel 'Time (days)';
+ylabel '# of people';
+
+subplot(2, 2, 2)
+Gr10 = round([y(:, 2), y(:, 6), y(:, 10), y(:, 14) + y(:, 18), y(:, 22)]);
+h = plot(tPlotting, Gr10, 'LineWidth', 2);
+legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
+title('Grade 10');
+xlabel 'Time (days)';
+ylabel '# of people';
+
+subplot(2, 2, 3)
+Gr11 = round([y(:, 3), y(:, 7), y(:, 11), y(:, 15) + y(:, 19), y(:, 23)]);
+h = plot(tPlotting, Gr11, 'LineWidth', 2);
+legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
+title('Grade 11');
+xlabel 'Time (days)';
+ylabel '# of people';
+
+subplot(2, 2, 4)
+Gr12 = round([y(:, 4), y(:, 8), y(:, 12), y(:, 16) + y(:, 20), y(:, 24)]);
+h = plot(tPlotting, Gr12, 'LineWidth', 2);
+legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
+title('Grade 12');
+xlabel 'Time (days)';
+ylabel '# of people';

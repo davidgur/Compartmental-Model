@@ -4,6 +4,10 @@ function dydt = model(t, y, paramPack, contactMatrixFriends, contactMatrixClass)
     minutesExposed          = paramPack(2);
     minutesAtSchoolInfected = paramPack(3);
     minutesAtHomeInfected   = paramPack(4);
+    grade9Population        = paramPack(5);
+    grade10Population       = paramPack(6);
+    grade11Population       = paramPack(7);
+    grade12Population       = paramPack(8);
     
     % ----- Constants ----- %
     washroomVisitRate = 0.00047;
@@ -20,21 +24,25 @@ function dydt = model(t, y, paramPack, contactMatrixFriends, contactMatrixClass)
     H = [y(17) y(18) y(19) y(20)];
     W = y(21);
     
+    N = [grade9Population grade10Population grade11Population grade12Population];
+    
     % ----- Differential Equations ----- %
-    dydt(1) = resolveSusceptible(getDayState(), 1); % Grade 9  S
-    dydt(2) = resolveSusceptible(getDayState(), 2); % Grade 10 S
-    dydt(3) = resolveSusceptible(getDayState(), 3); % Grade 11 S
-    dydt(4) = resolveSusceptible(getDayState(), 4); % Grade 12 S
+    dayState = getDayState();
+    
+    dydt(1) = resolveSusceptible(dayState, 1); % Grade 9  S
+    dydt(2) = resolveSusceptible(dayState, 2); % Grade 10 S
+    dydt(3) = resolveSusceptible(dayState, 3); % Grade 11 S
+    dydt(4) = resolveSusceptible(dayState, 4); % Grade 12 S
     
     dydt(5) = 0; % Grade 9  V
     dydt(6) = 0; % Grade 10 V
     dydt(7) = 0; % Grade 11 V
     dydt(8) = 0; % Grade 12 V
     
-    dydt(9)  = resolveExposed(getDayState(), 1); % Grade 9  E
-    dydt(10) = resolveExposed(getDayState(), 2); % Grade 10 E
-    dydt(11) = resolveExposed(getDayState(), 3); % Grade 11 E
-    dydt(12) = resolveExposed(getDayState(), 4); % Grade 12 E
+    dydt(9)  = resolveExposed(dayState, 1); % Grade 9  E
+    dydt(10) = resolveExposed(dayState, 2); % Grade 10 E
+    dydt(11) = resolveExposed(dayState, 3); % Grade 11 E
+    dydt(12) = resolveExposed(dayState, 4); % Grade 12 E
     
     dydt(13) = resolveInfected(1); % Grade 9  I
     dydt(14) = resolveInfected(2); % Grade 10 I
@@ -56,32 +64,40 @@ function dydt = model(t, y, paramPack, contactMatrixFriends, contactMatrixClass)
     dydt = dydt(:);
     
     function dayState = getDayState()
-        if (0 <= t) && (t < 500)
+        % Check if weekend
+        dayCount = floor(t / 24*60);
+        if (mod(dayCount, 6) == 0 || mod(dayCount, 7) == 0)
             dayState = 1;
-        elseif (500 <= t) && (t < 520)
-            dayState = 2;
-        elseif (520 <= t) && (t < 600)
-            dayState = 3;
-        elseif (600 <= t) && (t < 605)
-            dayState = 2;
-        elseif (605 <= t) && (t < 680)
-            dayState = 3;
-        elseif (680 <= t) && (t < 685)
-            dayState = 2;
-        elseif (685 <= t) && (t < 760)
-            dayState = 3;
-        elseif (760 <= t) && (t < 765)
-            dayState = 2;
-        elseif (765 <= t) && (t < 840)
-            dayState = 3;
-        elseif (840 <= t) && (t < 845)
-            dayState = 2;
-        elseif (845 <= t) && (t < 920)
-            dayState = 3;
-        elseif (920 <= t) && (t < 940)
-            dayState = 2;
-        elseif (940 <= t) && (t < 24 * 60)
-            dayState = 1;
+        else
+            tDay = mod(t, 24*60);
+
+            if (0 <= tDay) && (tDay < 500)
+                dayState = 1;
+            elseif (500 <= tDay) && (tDay < 520)
+                dayState = 2;
+            elseif (520 <= tDay) && (tDay < 600)
+                dayState = 3;
+            elseif (600 <= tDay) && (tDay < 605)
+                dayState = 2;
+            elseif (605 <= tDay) && (tDay < 680)
+                dayState = 3;
+            elseif (680 <= tDay) && (tDay < 685)
+                dayState = 2;
+            elseif (685 <= tDay) && (tDay < 760)
+                dayState = 3;
+            elseif (760 <= tDay) && (tDay < 765)
+                dayState = 2;
+            elseif (765 <= tDay) && (tDay < 840)
+                dayState = 3;
+            elseif (840 <= tDay) && (tDay < 845)
+                dayState = 2;
+            elseif (845 <= tDay) && (tDay < 920)
+                dayState = 3;
+            elseif (920 <= tDay) && (tDay < 940)
+                dayState = 2;
+            elseif (940 <= tDay) && (tDay < 24 * 60)
+                dayState = 1;
+            end
         end
     end
     
@@ -91,19 +107,19 @@ function dydt = model(t, y, paramPack, contactMatrixFriends, contactMatrixClass)
         elseif dayState == 2 % Before / After Class
             B = 0;
             for j = 1:4
-                B = B + (2/20) * infectionProbability * contactMatrixFriends(i, j) * I(j);
+                B = B + (2/20) * infectionProbability * contactMatrixFriends(i, j) * I(j) / N(i);
             end
             
-            W = (1/6) * washroomVisitRate * infectionProbability * pulmonaryVentilation * y(W);
-            s_i = -(B + W) * y(S(i));
+            w = (1/6) * washroomVisitRate * infectionProbability * pulmonaryVentilation * W;
+            s_i = -(B + w) * S(i);
         elseif dayState == 3 % In Class
             B = 0;
             for j = 1:4
-                B = B + (3 / 75) * infectionProbability * contactMatrixClass(i, j) * I(j);
+                B = B + (3 / 75) * infectionProbability * contactMatrixClass(i, j) * I(j) / N(i);
             end
             
-            W = (1/6) * washroomVisitRate * infectionProbability * pulmonaryVentilation * W;
-            s_i = -(B + W) * y(S(i));
+            w = (1/6) * washroomVisitRate * infectionProbability * pulmonaryVentilation * W;
+            s_i = -(B + w) * S(i);
         end
     end
 

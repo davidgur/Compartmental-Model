@@ -81,3 +81,5 @@ legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
 title('Grade 12');
 xlabel 'Time (days)';
 ylabel '# of people';
+
+suptitle('Compartmentalization of secondary school population experiencing a measles outbreak over time');

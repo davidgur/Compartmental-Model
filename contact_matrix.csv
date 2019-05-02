@@ -1,0 +1,17 @@
+Home, Grade9, Grade10, Grade11, Grade12,
+Grade9, 0, 0, 0, 0,
+Grade10, 0, 0, 0, 0,
+Grade11, 0, 0, 0, 0,
+Grade12, 0, 0, 0, 0,
+
+Friends, Grade9, Grade10, Grade11, Grade12,
+Grade9, 0.97, 0.03, 0, 0,
+Grade10, 0.03, 0.97, 0.03, 0,
+Grade11, 0, 0.03, 0.97, 0.03,
+Grade12, 0, 0, 0.03, 0.97,
+
+Class, Grade9, Grade10, Grade11, Grade12,
+Grade9, 1, 0, 0, 0,
+Grade10, 0, 1, 0, 0,
+Grade11, 0, 0, 1, 0,
+Grade12, 0, 0, 0, 1,

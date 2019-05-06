@@ -1,7 +1,7 @@
 % measles.m
 % David Gurevich
 % May 2, 2019
-% Last Updatedd: May 2, 2019
+% Last Updated: May 6, 2019
 
 % Modelling the spread of measles within secondary schools
 
@@ -10,14 +10,14 @@
 daysToModel  = 60;
 minPerDay    = 24 * 60;
 totalMinutes = daysToModel * minPerDay;
-vaccCoverage = 0.0;
+vaccCoverage = 0;
 
 infectionProbability = 0.91;
 
 minutesExposed          = 11 * minPerDay;
 minutesInfected         = 6 * minPerDay;
 minutesAtSchoolInfected = 4 * minPerDay;
-minutesAtHomeInfected   = minutesInfected - minutesAtSchoolInfected;
+minutesAtHomeInfected   = 2 * minPerDay;
 
 grade9Population  = 292;
 grade10Population = 356;

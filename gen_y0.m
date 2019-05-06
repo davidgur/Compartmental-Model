@@ -6,7 +6,8 @@ function y0 = gen_y0(grade9Population,grade10Population, grade11Population, grad
 %            vaccCoverage);
 
 gradePopulations = [grade9Population grade10Population grade11Population grade12Population];
-gradeForInfectionStart = randi([1 4], 1, 1);
+%gradeForInfectionStart = randi([1 4], 1, 1);
+gradeForInfectionStart = 2;
 
 I0 = 1;
 S0 = gradePopulations(gradeForInfectionStart) - I0;

@@ -30,32 +30,32 @@ S4 = gradePopulations(4) - V4;
 if gradeForInfectionStart == 1
     y0 = [S0, S2, S3, S4, ... % Susceptible
           V0, V2, V3, V4, ... % Vaccinated
-          I0,  0,  0,  0, ... % Exposed
-           0,  0,  0,  0, ... % Infected
+           0,  0,  0,  0, ... % Exposed
+          I0,  0,  0,  0, ... % Infected
            0,  0,  0,  0, ... % At Home
            0,  0,  0,  0, ... % Recovered
            0];                % Washroom
 elseif gradeForInfectionStart == 2
     y0 = [S1, S0, S3, S4, ... % Susceptible
           V1, V0, V3, V4, ... % Vaccinated
-           0, I0,  0,  0, ... % Exposed
-           0,  0,  0,  0, ... % Infected
+           0,  0,  0,  0, ... % Exposed
+           0, I0,  0,  0, ... % Infected
            0,  0,  0,  0, ... % At Home
            0,  0,  0,  0, ... % Recovered
            0];                % Washroom
 elseif gradeForInfectionStart == 3
     y0 = [S1, S2, S0, S4, ... % Susceptible
           V1, V2, V0, V4, ... % Vaccinated
-           0,  0, I0,  0, ... % Exposed
-           0,  0,  0,  0, ... % Infected
+           0,  0,  0,  0, ... % Exposed
+           0,  0, I0,  0, ... % Infected
            0,  0,  0,  0, ... % At Home
            0,  0,  0,  0, ... % Recovered
            0];                % Washroom
 elseif gradeForInfectionStart == 4
     y0 = [S1, S2, S3, S0, ... % Suscpetible
           V1, V2, V3, V0, ... % Vaccinated
-           0,  0,  0, I0, ... % Exposed
-           0,  0,  0,  0, ... % Infected
+           0,  0,  0,  0, ... % Exposed
+           0,  0,  0, I0, ... % Infected
            0,  0,  0,  0, ... % At Home
            0,  0,  0,  0, ... % Recovered
            0];                % Washroom

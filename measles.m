@@ -7,10 +7,10 @@
 
 
 % ---------- Simulation Params ---------- %
-daysToModel  = 60;
+daysToModel  = 90;
 minPerDay    = 24 * 60;
 totalMinutes = daysToModel * minPerDay;
-vaccCoverage = 0;
+vaccCoverage = 0.9;
 
 infectionProbability = 0.91;
 
@@ -50,6 +50,8 @@ paramPack = [infectionProbability, ...
 % ---------- Plotting ---------- %
 tPlotting = linspace(0, daysToModel, totalMinutes);
 
+figure('DefaultAxesFontSize',20)
+
 subplot(2, 2, 1)
 Gr9 = round([y(:, 1), y(:, 5), y(:, 9), y(:, 13) + y(:, 17), y(:, 21)]);
 h = plot(tPlotting, Gr9, 'LineWidth', 2);
@@ -69,6 +71,7 @@ ylabel '# of people';
 subplot(2, 2, 3)
 Gr11 = round([y(:, 3), y(:, 7), y(:, 11), y(:, 15) + y(:, 19), y(:, 23)]);
 h = plot(tPlotting, Gr11, 'LineWidth', 2);
+
 legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
 title('Grade 11');
 xlabel 'Time (days)';
@@ -79,7 +82,7 @@ Gr12 = round([y(:, 4), y(:, 8), y(:, 12), y(:, 16) + y(:, 20), y(:, 24)]);
 h = plot(tPlotting, Gr12, 'LineWidth', 2);
 legend(h, 'Susceptible', 'Vaccinated', 'Exposed', 'Infected', 'Recovered');
 title('Grade 12');
-xlabel 'Time (days)';
-ylabel '# of people';
+xlabel('Time (days)');
+ylabel('# of people');
 
-suptitle('Compartmentalization of secondary school population experiencing a measles outbreak over time');
+%suptitle({['Compartmentalization of student population over the course of a measles outbreak'], ['50% Vaccination Coverage']});
